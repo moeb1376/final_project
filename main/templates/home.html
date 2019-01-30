@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Room Segmentation</title>
+    {% load static %}
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href='{% static "css/materialize.min.css" %}' media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+</head>
+<body>
+<div class="row">
+    <nav class="col xl6 offset-xl3 l6 offset-l3 m8 offset-m2 s12 cyan darken-2 ">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Room Segmentation</a>
+        </div>
+    </nav>
+</div>
+{% if not uploaded %}
+    <div class="row">
+        <ul class="collapsible col xl6 offset-xl3 l6 offset-l3 m8 offset-m2 s12">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">collections</i>Sample</div>
+                <div class="collapsible-body">
+                    {% for sample in samples %}
+                        <span><a href="/sample/{{ sample }}">{{ sample }}</a></span>
+                        <br><br>
+                    {% endfor %}
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">cloud_upload</i>Upload</div>
+                <div class="collapsible-body">
+                <span>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label class="waves-effect waves-light btn"> Choose File
+                            <input class="waves-effect waves-light btn" type="file" name="myfile" style="display: none">
+                        </label>
+                        <button class="waves-effect waves-light btn" type="submit">Upload</button>
+                    </form>
+                </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+{% else %}
+    <input hidden value="{{ upload }}" id="upload_url">
+    <div class="row">
+        <div class="col xl6 offset-xl3 l6 offset-l3 m8 offset-m2 s12 ">
+            <div class="waves-effect waves-light btn col s6" id="camScanner">camera</div>
+            <div class="waves-effect waves-light btn col s6" id="map">map</div>
+        </div>
+    </div>
+    <div class="row" style="height: 10vh">
+        <div class="col xl6 offset-xl3 l6 offset-l3 m8 offset-m2 s12" id="test">
+        </div>
+    </div>
+{% endif %}
+<!--JavaScript at end of body for optimized loading-->
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="{% static 'js/xhrRequest.js' %}"></script>
+<script type="text/javascript" src='{% static "js/materialize.min.js" %}'></script>
+<script>
+    M.AutoInit();
+
+</script>
+</body>
+</html>
